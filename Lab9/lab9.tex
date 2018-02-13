@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+\usepackage{adjustbox}
+\usepackage{fixltx2e}
+\usepackage{amssymb,amsmath,epsfig,rawfonts}
+\usepackage{theorem,latexsym}
+\usepackage{amsmath,amssymb,natbib}
+\usepackage{multicol,multirow,epsfig}
+\usepackage{makeidx}  %% use this pack to add an index page
+\makeindex   
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\title{CENG 391 Introduction to Image Understanding}
+\date{December 22, 2017}
+
+\begin{document}
+	\maketitle
+	\begin{center}\textbf{Homography Estimation with RANSAC}\end{center}
+Write a C++/Python program that  operates the following tasks.
+\begin{enumerate}
+\item Read the images("img1.jpg","img2.jpg")
+\item Read the correspondences from the file "corrs.txt" 
+\item Choose the number of iterations $N$ as 10000 initially.
+\item Select 4 random correspondences.
+\item Compute homography(H) with these correspondences by applying DLT algorithm that we have seen in the previous lab.
+\item Transform points from reference image to query image for each potential correspondence between the images: $x' = H * x $
+\item Count number of inliers as follows:\\
+    --- Check whether there exists any point close to transformed points with the Euclidean distance at most \textbf{3 pixels}.
+\item Compute the inlier ratio as follows:\\
+\begin{equation}
+\text{inlierRatio} = \% \frac{\text{numberOfInliers}}{\text{numberOfCorrespondences}}
+\end{equation}
+\item Update $N$ as follows:\\
+\begin{enumerate}
+
+\item Calculate the probability($w$) of each of the randomly selected correspondence is inlier.
+\item $1 - ( 1 - w^{s})^{N} >= 0.99$. From there, calculate N. 
+
+\end{enumerate}
+\item Repeat step[4-9] N times and save the homography that gives the maximum inlier ratio.
+
+\item Warp the second image with the inverse of the final computed homography.
+\end{enumerate}
+\end{document}
